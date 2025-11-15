@@ -1,0 +1,411 @@
+/* ===================================
+   GLOBAL VARIABLES + BASE RESET
+   =================================== */
+:root{
+  --brand: #FFA07A;
+  --brand-hover: #F08060;
+  --accent: #007bff;
+  --muted: #6c757d;
+  --text: #213547;
+  --card-bg: #fff;
+  --shadow-soft: rgba(0,0,0,0.08);
+  --shadow-strong: rgba(0,0,0,0.12);
+  --bg-footer: #fffafa;
+  --max-width: 1200px;
+  --header-h: 70px;
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Open Sans", "Helvetica Neue", sans-serif;
+  color-scheme: light;
+}
+
+/* Reset small defaults */
+*{box-sizing: border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  color:var(--text);
+  line-height:1.45;
+  
+  /* 👇 --- PRUEBA ESTE VALOR --- 👇 */
+  /* Cambié 0.85 por 0.80 para que sea un poco menos blanco */
+  background: linear-gradient(rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 0.80)), url('/oso5.jpg') center/cover no-repeat fixed;
+  /* 👆 --- FIN DEL CAMBIO --- 👆 */
+
+  background-color: #fff; 
+  min-height: 100vh;  transition: background-image .4s ease;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Background variants (use by adding class on <body> or top container) */
+.bg-base {
+  background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('/oso5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.bg-dark-layer {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/oso5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.bg-white-layer {
+  background-image: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('/oso5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Layout helpers */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+.main-content {
+  padding-top: var(--header-h); /* space for fixed header */
+  min-height: calc(100vh - var(--header-h));
+}
+
+/* Centered card commonly used in Home / Nosotros / Forms */
+.center-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px var(--shadow-soft);
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Generic grid for products / posts */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+}
+
+/* ===================================
+   CARD (single reusable component)
+   =================================== */
+.card {
+  background: var(--card-bg);
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease;
+  box-shadow: 0 8px 15px var(--shadow-soft);
+  text-decoration: none; /* links using .card should remove default link styles */
+  color: inherit;
+}
+.card:hover{ transform: translateY(-5px); box-shadow: 0 12px 20px var(--shadow-strong); }
+
+.card-media{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+.card-body{
+  padding: 1.25rem;
+  flex-grow:1;
+}
+.card-title{ font-size: 1.2rem; font-weight: 700; margin:0 0 .5rem; color:#343a40; }
+.card-sub{ color:var(--muted); margin-bottom: .75rem; font-size: .98rem; }
+
+/* actions area placed at bottom */
+.card-actions{
+  padding: .75rem 1.25rem 1.25rem;
+  display:flex;
+  gap:.75rem;
+  justify-content: space-between;
+  align-items:center;
+}
+
+/* ===================================
+   BUTTONS (reusable)
+   =================================== */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  padding: .65rem 1rem;
+  border-radius:var(--radius-md);
+  cursor:pointer;
+  border: none;
+  text-decoration:none;
+}
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--brand);
+  color: var(--brand);
+}
+.btn-ghost:hover{ background:var(--brand); color:#fff; }
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover{ background: var(--brand-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,160,122,.45); }
+
+/* small utility for product list primary CTA */
+.btn-block{ width:100%; }
+
+/* ===================================
+   FORM STYLES (single form style reused for login & register)
+   =================================== */
+.form-shell{
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid rgba(163,224,249,.6);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  text-align:left;
+}
+.form-shell h2{ text-align:center; margin-top:0; margin-bottom:1rem; font-weight:700; color:#343a40; }
+.form-group{ margin-bottom: 1.25rem; display:flex; flex-direction:column; gap:.5rem;}
+.form-label{ font-weight:600; color:#343a40;}
+.input-icon-wrapper{ position:relative; }
+.form-control{
+  padding: 12px 14px 12px 44px;
+  border-radius: 10px;
+  border:1px solid rgba(163,224,249,.6);
+  outline:none;
+  font-size:1rem;
+  width: 100%;
+}
+.form-control:focus{ box-shadow: 0 0 0 .2rem rgba(0,123,255,.12); border-color: var(--accent); }
+.input-icon{
+  position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#adb5bd; font-size:1.05rem;
+}
+.error-message{ color: #dc3545; font-size:.9rem; margin-top:.25rem; }
+.server-error-message{ color:#b02a37; background: rgba(220,53,69,.06); padding:.5rem; border-radius:8px; margin-bottom:1rem; }
+
+/* ===================================
+   CART LAYOUT (small, composable pieces)
+   =================================== */
+.cart-layout{ max-width:1000px; margin:0 auto; padding: 4rem 1rem 2rem; }
+.cart-grid{ display:grid; grid-template-columns: 2fr 1fr; gap:1.25rem; }
+.cart-item{
+  display:flex; gap:1rem; align-items:center; background:var(--card-bg);
+  padding:1rem; border-radius:10px;
+}
+.cart-item img{ width:80px; height:80px; object-fit:cover; border-radius:6px; }
+.qty-controls{ display:flex; gap:.5rem; align-items:center; }
+
+/* cart summary box */
+.summary{
+  background:var(--card-bg); padding:1.25rem; border-radius:12px; box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+.summary-total{ display:flex; justify-content:space-between; font-weight:700; margin-top:1rem; border-top:1px dashed #eee; padding-top:.75rem; }
+
+/* ===================================
+   HEADER / NAV (single header style)
+   =================================== */
+.header-fixed{
+  position:fixed; left:0; right:0; top:0; height:var(--header-h);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding: .6rem 2.5rem; background: #fff; box-shadow:0 2px 5px rgba(0,0,0,.08); z-index:1000;
+}
+.header-left{ display:flex; align-items:center; gap:1rem; }
+.logo{ height:65px; display:block; }
+.nav{ display:flex; gap: .9rem; align-items:center; }
+.nav a{ text-decoration:none; color:#333; font-weight:600; font-size:0.98rem; }
+.nav a:hover{ color: var(--brand-hover); }
+.right-controls{ display:flex; align-items:center; gap:1rem; }
+.cart-link{ position:relative; display:inline-flex; align-items:center; gap:.35rem; text-decoration:none; color:inherit; }
+.badge{ position:absolute; top:-6px; right:-8px; background:#dc3545; color:#fff; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+
+
+/* ===================================
+   FOOTER
+   =================================== */
+.footer{
+  background: var(--bg-footer); padding: 2.5rem 1rem; margin-top:2rem; border-top:1px solid rgba(0,0,0,0.04);
+}
+.footer-inner{ max-width:var(--max-width); margin:0 auto; display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap;}
+.footer-section{ min-width:200px; flex:1; margin: .5rem 0; }
+.footer h3{ margin-top:0; color:#333; font-size:1.05rem; }
+.footer a{ color:inherit; text-decoration:none; }
+.footer .social a{ margin-right: .6rem; font-size:1.15rem; }
+
+/* tiny utility classes */
+.text-center{ text-align:center; }
+.mb-1{ margin-bottom: .5rem; }
+.mb-2{ margin-bottom: 1rem; }
+.p-0{ padding:0; }
+.hidden-sm{ display:inline; }
+@media (max-width:768px){ .hidden-sm{ display:none; } }
+
+/* -------------------------
+   Mobile navigation & hamburger
+   ------------------------- */
+
+.mobile-toggle {
+  display: none; /* se mostrará por media query */
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* three simple bars - no transform animation on open */
+.mobile-toggle .bar {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background: #333;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: opacity 120ms ease;
+}
+
+/* no rotation/translate - keep it simple when open */
+.mobile-toggle .bar.open {
+  opacity: 1;
+}
+
+/* Mobile nav dropdown */
+.mobile-nav {
+  position: absolute;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  background: var(--card-bg); /* white */
+  z-index: 999;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  gap: 8px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* links inside mobile nav */
+.mobile-nav a {
+  display: block;
+  padding: 10px 8px;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+}
+.mobile-nav a:hover { background: rgba(0,0,0,0.03); color: var(--brand-hover); }
+
+/* auth link style inside mobile nav */
+.mobile-auth-link {
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 0;
+  font-weight: 700;
+  display: block;
+}
+
+/* small cart link inside mobile nav */
+.mobile-cart-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+/* ensure desktop nav remains unchanged on large screens (you already have media queries) */
+@media (max-width: 768px) {
+  .nav { display: none; } /* already present in your CSS; keep for safety */
+  .mobile-toggle { display: flex; flex-direction: column; }
+  .hidden-sm { display: none !important; } /* ensure desktop-only links hide */
+}
+@media (max-width: 768px) {
+  .mobile-nav .btn {
+    background: transparent !important;
+    color: var(--brand) !important;
+    border: 2px solid var(--brand);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .mobile-nav .btn:hover {
+    background: var(--brand) !important;
+    color: #fff !important;
+  }
+}
+
+/* Home hero grid (desktop -> mobile) */
+.home-hero-grid{
+  height:360px;
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:16px;
+  align-items:stretch;
+  padding:0 1.25rem 1.25rem;
+}
+.home-hero-media .card-media{ height:100%; object-fit:cover; }
+
+/* Blog highlight grid */
+.home-blog-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:16px;
+  align-items:center;
+}
+
+
+.form-grid-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+/* Mobile */
+@media (max-width:768px){
+  .home-hero-grid{ grid-template-columns:1fr; height:auto; padding:0 1rem 1rem; }
+  .home-hero-media{ height:240px; }
+  .home-hero-media .card-media{ height:100%; }
+
+  .home-blog-grid{ grid-template-columns:1fr; }
+}
+
+/* ===========================
+   APPENDED: mobile-first cart/checkout tweaks
+   =========================== */
+
+/* page shells that allow sticky bottom summary */
+.cart-page, .checkout-page { display:flex; flex-direction:column; min-height:100dvh; }
+.cart-content, .checkout-content { flex:1 1 auto; padding-bottom:96px; }
+
+/* sticky summary bar at bottom */
+.sticky-summary {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 12px 16px;
+  display: grid;
+  gap: 8px;
+}
+
+/* compact qty buttons */
+.btn-qty { padding:4px 8px; min-width:28px; height:28px; line-height:20px; border-radius:8px; font-weight:700; }
+
+/* make item row more image-forward on mobile */
+@media (max-width: 768px) {
+  .cart-grid { grid-template-columns: 1fr; }
+  .cart-item { gap: 12px; }
+  .cart-item img { width:96px; height:96px; border-radius:12px; }
+  .summary { margin-top: 12px; } /* non-sticky variant spacing */
+}
